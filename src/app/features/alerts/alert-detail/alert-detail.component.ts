@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { DocumentAlertService } from '../../../core/services/document-alert.service';
+import { DocumentAlertService } from '../../../services/document-alert.service';
 import { DocumentAlert } from '../../../core/models/document-alert.model';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
@@ -75,11 +75,11 @@ export class AlertDetailComponent implements OnInit {
   
   loadAlert(id: string): void {
     this.alertService.getDocumentAlert(id).subscribe({
-      next: (alert) => {
+      next: (alert: DocumentAlert) => {
         this.alert = alert;
         this.loading = false;
       },
-      error: () => {
+      error: (error: any) => {
         this.loading = false;
       }
     });
@@ -96,7 +96,7 @@ export class AlertDetailComponent implements OnInit {
       next: () => {
         this.router.navigate(['/alerts']);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Failed to delete alert:', error);
       }
     });
