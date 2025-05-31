@@ -38,7 +38,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                     placeholder="Choose a username"
                   >
                   <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">Username is required</div>
+                    <div *ngIf="f.username.errors['required']">Username is required</div>
                   </div>
                 </div>
                 
@@ -53,8 +53,8 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                     placeholder="Enter your email"
                   >
                   <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                    <div *ngIf="f.email.errors.required">Email is required</div>
-                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                    <div *ngIf="f.email.errors['required']">Email is required</div>
+                    <div *ngIf="f.email.errors['email']">Email must be a valid email address</div>
                   </div>
                 </div>
                 
@@ -69,8 +69,8 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                     placeholder="Create a password"
                   >
                   <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                    <div *ngIf="f.password.errors['required']">Password is required</div>
+                    <div *ngIf="f.password.errors['minlength']">Password must be at least 6 characters</div>
                   </div>
                 </div>
                 
@@ -85,7 +85,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                     placeholder="Confirm your password"
                   >
                   <div *ngIf="submitted && (f.confirmPassword.errors || passwordMismatch)" class="invalid-feedback">
-                    <div *ngIf="f.confirmPassword.errors?.required">Confirm Password is required</div>
+                    <div *ngIf="f.confirmPassword.errors?.['required']">Confirm Password is required</div>
                     <div *ngIf="passwordMismatch">Passwords do not match</div>
                   </div>
                 </div>
@@ -101,7 +101,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                     placeholder="Enter your organization/tenant name"
                   >
                   <div *ngIf="submitted && f.tenantName.errors" class="invalid-feedback">
-                    <div *ngIf="f.tenantName.errors.required">Tenant name is required</div>
+                    <div *ngIf="f.tenantName.errors['required']">Tenant name is required</div>
                   </div>
                   <small class="form-text text-muted">
                     This will create a new tenant for your account.

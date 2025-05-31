@@ -38,7 +38,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                     placeholder="Enter your username"
                   >
                   <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">Username is required</div>
+                    <div *ngIf="f.username.errors['required']">Username is required</div>
                   </div>
                 </div>
                 
@@ -53,7 +53,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                     placeholder="Enter your password"
                   >
                   <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors['required']">Password is required</div>
                   </div>
                 </div>
                 
