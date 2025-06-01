@@ -68,7 +68,6 @@
         class="form-control"
         (change)="onFileSelected($event)"
         [required]="ingestMode === 'file'"
-        #fileInput="ngModel"
         [class.is-invalid]="fileInput.invalid && (fileInput.dirty || fileInput.touched) && ingestMode === 'file'"
       />
       <div *ngIf="fileInput.invalid && (fileInput.dirty || fileInput.touched) && ingestMode === 'file'" class="invalid-feedback">

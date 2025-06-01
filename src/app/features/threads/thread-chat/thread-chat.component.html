@@ -39,11 +39,11 @@
         <div class="message-timestamp text-muted small mt-1">{{ msg.created_at | date:'shortTime' }}</div>
       </div>
     </div>
-    <div *ngIf="isSendingMessage && messages[messages.length-1]?.role === 'user' && messages[messages.length-1]?.id.startsWith('temp-')" class="message-wrapper user-message mb-3 opacity-50">
+    <div *ngIf="isSendingMessage && messages.length > 0 && messages[messages.length-1].role === 'user' && messages[messages.length-1].id?.startsWith('temp-')" class="message-wrapper user-message mb-3 opacity-50">
        <div class="message-bubble p-2 rounded shadow-sm">
         <div class="message-role fw-bold small">User (Sending...)</div>
-        <div class="message-content ws-pre-wrap">{{ messages[messages.length-1]?.content }}</div>
-        <div class="message-timestamp text-muted small mt-1">{{ messages[messages.length-1]?.created_at | date:'shortTime' }}</div>
+        <div class="message-content ws-pre-wrap">{{ messages[messages.length-1].content }}</div>
+        <div class="message-timestamp text-muted small mt-1">{{ messages[messages.length-1].created_at | date:'shortTime' }}</div>
       </div>
     </div>
   </main>

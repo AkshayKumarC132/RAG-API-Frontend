@@ -21,7 +21,7 @@ export class DocumentDetailComponent implements OnInit, OnDestroy {
   isCheckingStatus = false;
   error: string | null = null;
 
-  private pollingSubscription: Subscription | null = null;
+  public pollingSubscription: Subscription | null = null;
   private componentActive = true;
 
   constructor(
