@@ -11,7 +11,7 @@ import { catchError, finalize, switchMap, takeWhile, tap } from 'rxjs/operators'
   standalone: true,
   imports: [CommonModule, RouterModule, DatePipe],
   templateUrl: './document-detail.component.html',
-  // styleUrls: ['./document-detail.component.css']
+  styleUrls: ['./document-detail.component.scss']
 })
 export class DocumentDetailComponent implements OnInit, OnDestroy {
   document: Document | null = null;

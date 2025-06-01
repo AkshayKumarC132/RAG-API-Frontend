@@ -11,7 +11,7 @@ import { catchError, finalize, switchMap } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, RouterModule, DatePipe],
   templateUrl: './assistant-detail.component.html',
-  // styleUrls: ['./assistant-detail.component.css']
+  styleUrls: ['./assistant-detail.component.scss']
 })
 export class AssistantDetailComponent implements OnInit {
   assistant: Assistant | null = null;

@@ -14,7 +14,7 @@ import { catchError, finalize } from "rxjs/operators";
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: "./document-ingest.component.html",
-  // styleUrls: ['./document-ingest.component.css']
+  styleUrls: ['./document-ingest.component.scss']
 })
 export class DocumentIngestComponent implements OnInit {
   vectorStoreId = "";

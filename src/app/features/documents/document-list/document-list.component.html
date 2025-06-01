@@ -32,7 +32,7 @@
       <tbody>
         <tr *ngFor="let doc of documents" (click)="navigateToDetail(doc.id)" style="cursor: pointer;">
           <td>{{ doc.title || 'N/A' }}</td>
-          <td>{{ doc.vector_store_name || doc.vector_store_id || 'N/A' }}</td>
+          <td>{{ doc.vector_store_name || doc.vector_store || 'N/A' }}</td>
           <td>
             <span class="badge" [ngClass]="{
               'bg-success': doc.status === 'completed',
@@ -43,7 +43,7 @@
               {{ doc.status || 'Unknown' | titlecase }}
             </span>
           </td>
-          <td>{{ doc.upload_date | date:'medium' }}</td>
+          <td>{{ doc.uploaded_at | date:'medium' }}</td>
           <td>
             <button (click)="navigateToDetail(doc.id)" class="btn btn-sm btn-info me-2" title="View Details">
               <i class="fas fa-eye"></i> Details

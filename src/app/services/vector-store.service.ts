@@ -12,32 +12,32 @@ export class VectorStoreService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
   private apiUrl = environment.apiUrl;
-  
+
   getVectorStores(): Observable<VectorStore[]> {
     const token = this.authService.getToken();
     return this.http.get<VectorStore[]>(`${this.apiUrl}/vector-store/${token}/list/`);
   }
-  
+
   getVectorStore(id: string): Observable<VectorStore> {
     const token = this.authService.getToken();
     return this.http.get<VectorStore>(`${this.apiUrl}/vector-store/${token}/${id}/`);
   }
-  
-  createVectorStore(name: string): Observable<VectorStore> {
+
+  createVectorStore(data: Partial<VectorStore>): Observable<VectorStore> {
     const token = this.authService.getToken();
-    return this.http.post<VectorStore>(`${this.apiUrl}/vector-store/${token}/`, { name });
+    return this.http.post<VectorStore>(`${this.apiUrl}/vector-store/${token}/`, data);
   }
-  
-  updateVectorStore(id: string, name: string): Observable<VectorStore> {
+
+  updateVectorStore(id: string, data: Partial<VectorStore>): Observable<VectorStore> {
     const token = this.authService.getToken();
-    return this.http.put<VectorStore>(`${this.apiUrl}/vector-store/${token}/${id}/`, { name });
+    return this.http.put<VectorStore>(`${this.apiUrl}/vector-store/${token}/${id}/`, data);
   }
-  
+
   deleteVectorStore(id: string): Observable<any> {
     const token = this.authService.getToken();
     return this.http.delete(`${this.apiUrl}/vector-store/${token}/${id}/`);
   }
-  
+
   // Document access management
   addDocumentsToVectorStore(vectorStoreId: string, documentIds: string[]): Observable<any> {
     const token = this.authService.getToken();
@@ -46,7 +46,7 @@ export class VectorStoreService {
       document_ids: documentIds
     });
   }
-  
+
   removeDocumentsFromVectorStore(vectorStoreId: string, documentIds: string[]): Observable<any> {
     const token = this.authService.getToken();
     return this.http.put(`${this.apiUrl}/document-access/remove/${token}/`, {
@@ -54,7 +54,7 @@ export class VectorStoreService {
       document_ids: documentIds
     });
   }
-  
+
   getDocumentAccess(vectorStoreId: string): Observable<any> {
     const token = this.authService.getToken();
     return this.http.get(`${this.apiUrl}/document-access/${token}/list/?vector_store_id=${vectorStoreId}`);

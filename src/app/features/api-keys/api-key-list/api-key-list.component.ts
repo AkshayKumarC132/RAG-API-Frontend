@@ -9,7 +9,7 @@ import { OpenAIKey } from "../../../core/models/openai-key.model";
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: "./api-key-list.component.html",
-  // styleUrls: ['./api-key-list.component.css'] // Assuming no specific styles for now
+  styleUrls: ['./api-key-list.component.scss']
 })
 export class ApiKeyListComponent implements OnInit {
   apiKeys: OpenAIKey[] = [];
