@@ -19,6 +19,7 @@ export class VectorStoreDetailComponent implements OnInit {
 
   vectorStore$: Observable<VectorStore | null> = of(null);
   error: any = null;
+  isLoadingVectorStore: boolean = false;
 
   ngOnInit(): void {
     this.vectorStore$ = this.route.paramMap.pipe(
@@ -26,8 +27,10 @@ export class VectorStoreDetailComponent implements OnInit {
         const id = params.get('id');
         if (id) {
           this.error = null; // Reset error before new fetch
+          this.isLoadingVectorStore = true;
           return this.vectorStoreService.getVectorStore(id).pipe(
             catchError(err => {
+              this.isLoadingVectorStore = false;
               if (err.status === 404) {
                 this.error = null;
               } else {
