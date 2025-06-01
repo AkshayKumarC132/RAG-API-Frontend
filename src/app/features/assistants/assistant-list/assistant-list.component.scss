@@ -1,1 +1,8 @@
-/* Add component styles here */
+/* Styles for Assistant List Component */
+
+.instructions-excerpt {
+  max-width: 200px; /* Adjust as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
