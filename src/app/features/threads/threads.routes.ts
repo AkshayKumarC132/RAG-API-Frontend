@@ -10,7 +10,7 @@ export const THREADS_ROUTES: Routes = [
     loadComponent: () => import('./thread-create/thread-create.component').then(m => m.ThreadCreateComponent)
   },
   {
-    path: ':id',
+    path: ':id/chat',
     loadComponent: () => import('./thread-chat/thread-chat.component').then(m => m.ThreadChatComponent)
   }
 ];

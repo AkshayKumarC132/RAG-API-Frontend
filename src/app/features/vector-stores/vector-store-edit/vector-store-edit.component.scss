@@ -48,7 +48,7 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
-
 button:hover {
-  background-color: darken(var(--warning), 10%);
+  background-color: var(--primary);
+  color: var(--light);
 }
