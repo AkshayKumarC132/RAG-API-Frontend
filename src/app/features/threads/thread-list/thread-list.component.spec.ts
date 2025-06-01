@@ -17,8 +17,8 @@ describe('ThreadListComponent', () => {
   let mockRouter: Router;
 
   const mockThreads: Thread[] = [
-    { id: 'thread1', vector_store_id: 'vs1', vector_store_name: 'VS Alpha', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
-    { id: 'thread2', vector_store_id: 'vs2', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: 'thread1', vector_store_id_read: 'vs1', vector_store_name: 'VS Alpha', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: 'thread2', vector_store_id_read: 'vs2', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
   ];
 
   beforeEach(async () => {

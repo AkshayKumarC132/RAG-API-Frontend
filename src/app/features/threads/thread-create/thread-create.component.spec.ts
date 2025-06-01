@@ -19,7 +19,7 @@ describe('ThreadCreateComponent', () => {
 
   const mockCreatedThread: Thread = {
     id: 'threadNew123',
-    vector_store_id: 'vs1',
+    vector_store_id_read: 'vs1',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   };

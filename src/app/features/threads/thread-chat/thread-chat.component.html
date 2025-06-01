@@ -3,7 +3,7 @@
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <div>
         <h4 class="mb-0">Thread: {{ thread?.id || 'Loading...' }}</h4>
-        <small *ngIf="thread" class="text-muted">Vector Store: {{ thread.vector_store_name || thread.vector_store_id }}</small>
+        <small *ngIf="thread" class="text-muted">Vector Store: {{ thread.vector_store_name || thread.vector_store_id_read }}</small>
       </div>
       <div class="d-flex align-items-center">
         <ng-container *ngIf="assistants.length > 0; else noAssistants">

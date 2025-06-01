@@ -23,7 +23,7 @@
       <div (click)="navigateToChat(thread.id)" style="cursor: pointer; flex-grow: 1;">
         <h5 class="mb-1">Thread ID: {{ thread.id }}</h5>
         <p class="mb-1">
-          Vector Store: {{ thread.vector_store_name || thread.vector_store_id }}
+          Vector Store: {{ thread.vector_store_name || thread.vector_store_id_read }}
         </p>
         <small class="text-muted">Last Updated: {{ thread.updated_at | date:'medium' }}</small>
         <small class="text-muted ms-2">Created: {{ thread.created_at | date:'mediumDate' }}</small>
