@@ -19,7 +19,7 @@ interface AssistantFormData {
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './assistant-create.component.html',
-  // styleUrls: ['./assistant-create.component.css']
+  styleUrls: ['./assistant-create.component.scss']
 })
 export class AssistantCreateComponent implements OnInit {
   assistantForm: AssistantFormData = {

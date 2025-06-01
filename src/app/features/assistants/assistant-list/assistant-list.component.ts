@@ -11,7 +11,7 @@ import { catchError, finalize } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './assistant-list.component.html',
-  // styleUrls: ['./assistant-list.component.css']
+  styleUrls: ['./assistant-list.component.scss']
 })
 export class AssistantListComponent implements OnInit {
   assistants: Assistant[] = [];

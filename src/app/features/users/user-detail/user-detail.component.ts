@@ -17,7 +17,7 @@ export class UserDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
 
-  user$: Observable<User | null>;
+  user$: Observable<User | null> = of(null);
   error: any = null;
   initialLoading: boolean = true;
 

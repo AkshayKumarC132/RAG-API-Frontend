@@ -11,7 +11,7 @@ import { catchError, finalize } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './thread-list.component.html',
-  // styleUrls: ['./thread-list.component.css']
+  styleUrls: ['./thread-list.component.scss']
 })
 export class ThreadListComponent implements OnInit {
   threads: Thread[] = [];

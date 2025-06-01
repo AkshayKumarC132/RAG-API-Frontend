@@ -16,7 +16,7 @@ import { UserService } from '../../../services/user.service';
 export class UserListComponent implements OnInit {
   private userService = inject(UserService);
 
-  users$: Observable<User[]>;
+  users$: Observable<User[]> = of([]);
   error: any = null;
 
   ngOnInit(): void {

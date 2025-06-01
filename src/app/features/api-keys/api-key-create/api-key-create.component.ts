@@ -10,7 +10,7 @@ import { CreateOpenAIKeyRequest } from '../../../core/models/openai-key.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './api-key-create.component.html',
-  // styleUrls: ['./api-key-create.component.css'] // Assuming no specific styles for now
+  styleUrls: ['./api-key-create.component.scss']
 })
 export class ApiKeyCreateComponent {
   apiKeyName = '';

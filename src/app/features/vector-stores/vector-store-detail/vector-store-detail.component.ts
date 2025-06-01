@@ -17,7 +17,7 @@ export class VectorStoreDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private vectorStoreService = inject(VectorStoreService);
 
-  vectorStore$: Observable<VectorStore | null>;
+  vectorStore$: Observable<VectorStore | null> = of(null);
   error: any = null;
 
   ngOnInit(): void {

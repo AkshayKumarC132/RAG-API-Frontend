@@ -13,7 +13,7 @@ import { catchError, finalize } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './thread-create.component.html',
-  // styleUrls: ['./thread-create.component.css']
+  styleUrls: ['./thread-create.component.scss']
 })
 export class ThreadCreateComponent implements OnInit {
   vectorStoreId = '';

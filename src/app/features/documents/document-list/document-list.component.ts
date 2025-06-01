@@ -11,7 +11,7 @@ import { catchError, finalize } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './document-list.component.html',
-  // styleUrls: ['./document-list.component.css'] // If you add styles
+  styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit {
   documents: Document[] = [];
