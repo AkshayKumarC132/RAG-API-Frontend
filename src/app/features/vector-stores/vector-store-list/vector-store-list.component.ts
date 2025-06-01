@@ -1,56 +1,104 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { VectorStore } from '../../../core/models/vector-store.model';
-import { VectorStoreService } from '../../../services/vector-store.service';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit, inject } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { Observable, of } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { VectorStore } from "../../../core/models/vector-store.model";
+import { VectorStoreService } from "../../../services/vector-store.service";
 
 @Component({
-  selector: 'app-vector-store-list',
+  selector: "app-vector-store-list",
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
     <div class="container mx-auto p-4">
       <h1 class="text-2xl font-bold mb-4">Vector Stores</h1>
 
-      <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <div
+        *ngIf="error"
+        class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
         <strong class="font-bold">Error:</strong>
-        <span class="block sm:inline">{{ error.message || 'Could not load vector stores.' }}</span>
+        <span class="block sm:inline">{{
+          error.message || "Could not load vector stores."
+        }}</span>
       </div>
 
       <div class="mb-4">
-        <a routerLink="/vector-stores/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a
+          routerLink="/vector-stores/create"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
           Create New Vector Store
         </a>
       </div>
 
       <div *ngIf="vectorStores$ | async as vectorStores; else loading">
-        <div *ngIf="vectorStores.length > 0; else emptyState" class="overflow-x-auto">
+        <div
+          *ngIf="vectorStores.length > 0; else emptyState"
+          class="overflow-x-auto"
+        >
           <table class="min-w-full bg-white border border-gray-200">
             <thead>
               <tr>
-                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+                <th
+                  class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Name
+                </th>
+                <th
+                  class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Status
+                </th>
+                <th
+                  class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Created At
+                </th>
                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let vs of vectorStores" class="hover:bg-gray-50">
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ vs.name }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ vs.status }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ vs.created_at | date:'short' }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                  <a [routerLink]="['/vector-stores', vs.id]" class="text-indigo-600 hover:text-indigo-900 mr-2">Details</a>
-                  <a [routerLink]="['/vector-stores', vs.id, 'edit']" class="text-green-600 hover:text-green-900">Edit</a>
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                >
+                  {{ vs.name }}
+                </td>
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                >
+                  {{ vs.status }}
+                </td>
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                >
+                  {{ vs.created_at | date : "short" }}
+                </td>
+                <td
+                  class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
+                >
+                  <a
+                    [routerLink]="['/vector-stores', vs.id]"
+                    class="text-indigo-600 hover:text-indigo-900 mr-2"
+                    >Details</a
+                  >
+                  <a
+                    [routerLink]="['/vector-stores', vs.id, 'edit']"
+                    class="text-green-600 hover:text-green-900"
+                    >Edit</a
+                  >
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <ng-template #emptyState>
-          <p class="text-gray-700">No vector stores found. Why not create one?</p>
+          <p class="text-gray-700">
+            No vector stores found. Why not create one?
+          </p>
         </ng-template>
       </div>
       <ng-template #loading>
@@ -62,12 +110,12 @@ import { VectorStoreService } from '../../../services/vector-store.service';
 export class VectorStoreListComponent implements OnInit {
   private vectorStoreService = inject(VectorStoreService);
 
-  public vectorStores$: Observable<VectorStore[]>;
+  public vectorStores$: Observable<VectorStore[]> = of([]);
   public error: any = null;
 
   ngOnInit(): void {
     this.vectorStores$ = this.vectorStoreService.getVectorStores().pipe(
-      catchError(err => {
+      catchError((err) => {
         this.error = err;
         return [];
       })
