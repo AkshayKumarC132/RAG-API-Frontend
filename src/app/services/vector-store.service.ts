@@ -30,12 +30,21 @@ export class VectorStoreService {
     // For now, we'll pass the data directly.
     // If using a mock:
     // const newId = Math.random().toString(36).substring(2, 15);
+<<<<<<< HEAD
     // const mockVectorStore: VectorStore = {
     //   id: newId,
     //   name: data.name || 'Unnamed Store',
     //   status: 'creating',
     //   created_at: new Date(),
     //   ...data
+=======
+    // const mockVectorStore: VectorStore = {
+    //   id: newId,
+    //   name: data.name || 'Unnamed Store',
+    //   status: 'creating',
+    //   created_at: new Date(),
+    //   ...data
+>>>>>>> 6bc18a0bc9f7113f69a45dd53374aed86847735b
     // };
     // return of(mockVectorStore).pipe(delay(1000));
     return this.http.post<VectorStore>(`${this.apiUrl}/vector-store/${token}/`, data);
@@ -44,12 +53,21 @@ export class VectorStoreService {
   updateVectorStore(id: string, data: Partial<VectorStore>): Observable<VectorStore> {
     const token = this.authService.getToken();
     // If using a mock:
+<<<<<<< HEAD
     // const mockUpdatedStore: VectorStore = {
     //   id: id,
     //   name: data.name || 'Updated Store Name',
     //   status: data.status || 'active', // Assuming status might be updatable
     //   created_at: new Date(), // This might not be accurate for an update, depends on API
     //   ...data
+=======
+    // const mockUpdatedStore: VectorStore = {
+    //   id: id,
+    //   name: data.name || 'Updated Store Name',
+    //   status: data.status || 'active', // Assuming status might be updatable
+    //   created_at: new Date(), // This might not be accurate for an update, depends on API
+    //   ...data
+>>>>>>> 6bc18a0bc9f7113f69a45dd53374aed86847735b
     // };
     // return of(mockUpdatedStore).pipe(delay(1000));
     return this.http.put<VectorStore>(`${this.apiUrl}/vector-store/${token}/${id}/`, data);
