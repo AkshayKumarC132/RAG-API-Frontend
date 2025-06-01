@@ -1,6 +1,6 @@
 export interface OpenAIKey {
   id: string;
-  key: string;
+  api_key: string;
   masked_key: string;
   name?: string;
   is_valid: boolean;
@@ -8,6 +8,6 @@ export interface OpenAIKey {
 }
 
 export interface CreateOpenAIKeyRequest {
-  key: string;
+  api_key: string;
   name?: string;
 }

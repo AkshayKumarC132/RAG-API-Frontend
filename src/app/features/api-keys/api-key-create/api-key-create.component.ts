@@ -36,7 +36,7 @@ export class ApiKeyCreateComponent {
     this.error = null;
 
     const request: CreateOpenAIKeyRequest = {
-      key: this.apiKeyString.trim(),
+      api_key: this.apiKeyString.trim(),
       name: this.apiKeyName.trim() || undefined // Send undefined if name is empty
     };
 
@@ -46,7 +46,7 @@ export class ApiKeyCreateComponent {
         this.router.navigate(['/api-keys']); // Navigate to the list view
       },
       err => { // Changed variable name from error to err to avoid conflict
-        this.error = `Failed to create API key. ${err.error?.detail || 'Please ensure the key is valid and not a duplicate.'}`;
+        this.error = `Failed to create API key. ${err.error?.api_key || 'Please ensure the key is valid and not a duplicate.'}`;
         this.isLoading = false;
         console.error('Error creating API key:', err);
       }

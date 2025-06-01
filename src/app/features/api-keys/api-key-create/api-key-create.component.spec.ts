@@ -23,7 +23,7 @@ describe('ApiKeyCreateComponent', () => {
     masked_key: 'sk-...new',
     created_at: new Date().toISOString(),
     is_valid: true,
-    key: 'sk-realNewKey'
+    api_key: 'sk-realNewKey'
   };
 
   beforeEach(async () => {
@@ -34,7 +34,7 @@ describe('ApiKeyCreateComponent', () => {
       imports: [
         CommonModule,
         FormsModule,
-        RouterTestingModule, // RouterTestingModule.withRoutes([]) if you have routes in this component's direct template
+        // RouterTestingModule, // RouterTestingModule.withRoutes([]) if you have routes in this component's direct template
         HttpClientTestingModule,
         ApiKeyCreateComponent // Import the standalone component
       ],
@@ -66,7 +66,7 @@ describe('ApiKeyCreateComponent', () => {
       tick(); // Resolve createAPIKey observable
 
       const expectedRequest: CreateOpenAIKeyRequest = {
-        key: 'sk-test1234567890123456789012345678901234567890',
+        api_key: 'sk-test1234567890123456789012345678901234567890',
         name: 'Test Key'
       };
       expect(mockOpenAIKeyService.createAPIKey).toHaveBeenCalledWith(expectedRequest);
@@ -86,7 +86,7 @@ describe('ApiKeyCreateComponent', () => {
       tick();
 
       const expectedRequest: CreateOpenAIKeyRequest = {
-        key: 'sk-test1234567890123456789012345678901234567890',
+        api_key: 'sk-test1234567890123456789012345678901234567890',
         name: undefined
       };
       expect(mockOpenAIKeyService.createAPIKey).toHaveBeenCalledWith(expectedRequest);

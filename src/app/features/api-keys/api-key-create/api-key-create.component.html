@@ -20,8 +20,6 @@
         class="form-control"
         [(ngModel)]="apiKeyString"
         required
-        minlength="50"
-        pattern="^sk-[a-zA-Z0-9]{48}$"
         #keyInput="ngModel"
         [class.is-invalid]="keyInput.invalid && (keyInput.dirty || keyInput.touched)"
       />
