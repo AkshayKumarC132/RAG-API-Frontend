@@ -1,0 +1,74 @@
+<div class="chat-container d-flex flex-column vh-100">
+  <header class="chat-header p-3 bg-light border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div>
+        <h4 class="mb-0">Thread: {{ thread?.id || 'Loading...' }}</h4>
+        <small *ngIf="thread" class="text-muted">Vector Store: {{ thread.vector_store_name || thread.vector_store_id }}</small>
+      </div>
+      <div>
+        <button (click)="refreshMessages()" class="btn btn-outline-primary me-2" [disabled]="isLoadingMessages || isSendingMessage" title="Refresh Messages">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+        <button (click)="navigateBack()" class="btn btn-outline-secondary" title="Back to Thread List">
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div *ngIf="isLoadingThread && !thread" class="alert alert-info m-3">Loading thread details...</div>
+  <div *ngIf="error && !isLoadingThread" class="alert alert-danger m-3">
+    <strong>Error:</strong> {{ error }}
+    <button *ngIf="threadId" (click)="loadInitialData()" class="btn btn-sm btn-outline-danger ms-2">Retry Load</button>
+  </div>
+
+  <main #messageContainer class="chat-messages flex-grow-1 p-3 container-fluid" style="overflow-y: auto;">
+    <div *ngIf="isLoadingMessages && messages.length === 0" class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading messages...</span>
+      </div>
+    </div>
+    <div *ngIf="!isLoadingMessages && messages.length === 0 && !error" class="text-center text-muted mt-5">
+      No messages in this thread yet. Start the conversation!
+    </div>
+
+    <div *ngFor="let msg of messages" class="message-wrapper mb-3" [ngClass]="{'user-message': msg.role === 'user', 'assistant-message': msg.role === 'assistant'}">
+      <div class="message-bubble p-2 rounded shadow-sm">
+        <div class="message-role fw-bold small">{{ msg.role | titlecase }}</div>
+        <div class="message-content ws-pre-wrap">{{ msg.content }}</div>
+        <div class="message-timestamp text-muted small mt-1">{{ msg.created_at | date:'shortTime' }}</div>
+      </div>
+    </div>
+    <div *ngIf="isSendingMessage && messages[messages.length-1]?.role === 'user' && messages[messages.length-1]?.id.startsWith('temp-')" class="message-wrapper user-message mb-3 opacity-50">
+       <div class="message-bubble p-2 rounded shadow-sm">
+        <div class="message-role fw-bold small">User (Sending...)</div>
+        <div class="message-content ws-pre-wrap">{{ messages[messages.length-1]?.content }}</div>
+        <div class="message-timestamp text-muted small mt-1">{{ messages[messages.length-1]?.created_at | date:'shortTime' }}</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="chat-input-area p-3 bg-light border-top">
+    <div class="container-fluid">
+      <div *ngIf="sendError" class="alert alert-warning p-2 mb-2">
+        <small><strong>Send Error:</strong> {{ sendError }}</small>
+      </div>
+      <form (ngSubmit)="sendMessage()" #messageForm="ngForm" class="d-flex">
+        <input
+          type="text"
+          name="newMessageContent"
+          class="form-control me-2"
+          placeholder="Type your message..."
+          [(ngModel)]="newMessageContent"
+          [disabled]="isSendingMessage || isLoadingThread || !!error && !sendError"
+          required
+        />
+        <button type="submit" class="btn btn-primary" [disabled]="messageForm.invalid || isSendingMessage || isLoadingThread || !!error && !sendError">
+          <span *ngIf="isSendingMessage" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          {{ isSendingMessage ? 'Sending...' : 'Send' }}
+          <i *ngIf="!isSendingMessage" class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,97 @@
+<div class="container mt-4">
+  <div *ngIf="isLoading && !originalAssistant" class="alert alert-info">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading assistant data for editing...
+  </div>
+
+  <div *ngIf="error && !isSaving" class="alert alert-danger"> <!-- Show general errors only if not in saving process -->
+    {{ error }}
+  </div>
+
+  <div *ngIf="!isLoading && !originalAssistant && !error" class="alert alert-warning">
+    Assistant not found or could not be loaded for editing.
+    <button (click)="navigateBack()" class="btn btn-sm btn-secondary ms-2">Back</button>
+  </div>
+
+  <div *ngIf="originalAssistant">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Edit Assistant: {{ originalAssistant.name }}</h2>
+      <button (click)="navigateBack()" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Assistant Detail
+      </button>
+    </div>
+
+    <div *ngIf="isSaving" class="alert alert-info">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Saving changes...
+    </div>
+
+    <div *ngIf="error && isSaving" class="alert alert-danger"> <!-- Show saving specific errors -->
+        <strong>Error during save:</strong> {{ error }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #editForm="ngForm" *ngIf="!isLoading">
+      <!-- Name -->
+      <div class="form-group mb-3">
+        <label for="name" class="form-label">Assistant Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          [(ngModel)]="assistantForm.name"
+          required
+          minlength="3"
+          #nameInput="ngModel"
+          [class.is-invalid]="nameInput.invalid && (nameInput.dirty || nameInput.touched)"
+        />
+        <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="invalid-feedback">
+          <div *ngIf="nameInput.errors?.['required']">Name is required.</div>
+          <div *ngIf="nameInput.errors?.['minlength']">Name must be at least 3 characters long.</div>
+        </div>
+      </div>
+
+      <!-- Vector Store ID (Optional) -->
+      <div class="form-group mb-3">
+        <label for="vectorStoreId" class="form-label">Vector Store ID (Optional):</label>
+        <input
+          type="text"
+          id="vectorStoreId"
+          name="vectorStoreId"
+          class="form-control"
+          [(ngModel)]="assistantForm.vector_store_id"
+          #vsIdInput="ngModel"
+        />
+        <!-- TODO: Replace with a dropdown -->
+        <small class="form-text text-muted">Current: {{ originalAssistant.vector_store_id || 'None' }}. Change or remove to update.</small>
+      </div>
+
+      <!-- Instructions (Optional) -->
+      <div class="form-group mb-3">
+        <label for="instructions" class="form-label">Instructions (Optional):</label>
+        <textarea
+          id="instructions"
+          name="instructions"
+          class="form-control"
+          rows="8"
+          [(ngModel)]="assistantForm.instructions"
+          #instructionsInput="ngModel"
+          maxlength="4096"
+        ></textarea>
+        <small class="form-text text-muted">Provide specific instructions or context for the assistant. Max 4096 characters.</small>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid || isSaving || isLoading">
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{ isSaving ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

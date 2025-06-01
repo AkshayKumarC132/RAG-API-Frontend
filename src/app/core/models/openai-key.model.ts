@@ -6,3 +6,8 @@ export interface OpenAIKey {
   is_valid: boolean;
   created_at: string;
 }
+
+export interface CreateOpenAIKeyRequest {
+  key: string;
+  name?: string;
+}
