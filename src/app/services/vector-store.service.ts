@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { VectorStore } from '../core/models/vector-store.model';
 import { AuthService } from '../core/services/auth.service';
@@ -23,14 +24,35 @@ export class VectorStoreService {
     return this.http.get<VectorStore>(`${this.apiUrl}/vector-store/${token}/${id}/`);
   }
   
-  createVectorStore(name: string): Observable<VectorStore> {
+  createVectorStore(data: Partial<VectorStore>): Observable<VectorStore> {
     const token = this.authService.getToken();
-    return this.http.post<VectorStore>(`${this.apiUrl}/vector-store/${token}/`, { name });
+    // The actual API might expect an object like { name: 'store name', ...other_props }
+    // For now, we'll pass the data directly.
+    // If using a mock:
+    // const newId = Math.random().toString(36).substring(2, 15);
+    // const mockVectorStore: VectorStore = {
+    //   id: newId,
+    //   name: data.name || 'Unnamed Store',
+    //   status: 'creating',
+    //   created_at: new Date(),
+    //   ...data
+    // };
+    // return of(mockVectorStore).pipe(delay(1000));
+    return this.http.post<VectorStore>(`${this.apiUrl}/vector-store/${token}/`, data);
   }
   
-  updateVectorStore(id: string, name: string): Observable<VectorStore> {
+  updateVectorStore(id: string, data: Partial<VectorStore>): Observable<VectorStore> {
     const token = this.authService.getToken();
-    return this.http.put<VectorStore>(`${this.apiUrl}/vector-store/${token}/${id}/`, { name });
+    // If using a mock:
+    // const mockUpdatedStore: VectorStore = {
+    //   id: id,
+    //   name: data.name || 'Updated Store Name',
+    //   status: data.status || 'active', // Assuming status might be updatable
+    //   created_at: new Date(), // This might not be accurate for an update, depends on API
+    //   ...data
+    // };
+    // return of(mockUpdatedStore).pipe(delay(1000));
+    return this.http.put<VectorStore>(`${this.apiUrl}/vector-store/${token}/${id}/`, data);
   }
   
   deleteVectorStore(id: string): Observable<any> {
