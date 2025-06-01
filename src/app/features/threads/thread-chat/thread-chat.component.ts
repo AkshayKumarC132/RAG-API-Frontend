@@ -22,6 +22,7 @@ import {
   switchMap,
   tap,
   takeWhile,
+  filter,
 } from "rxjs/operators";
 
 @Component({
@@ -52,6 +53,10 @@ export class ThreadChatComponent
 
   private routeSub: Subscription | undefined;
   private autoRefreshSub: Subscription | undefined;
+
+  isString(value: any): boolean {
+    return typeof value === "string";
+  }
 
   constructor(
     private threadService: ThreadService,
@@ -248,24 +253,19 @@ export class ThreadChatComponent
           return this.threadService
             .createRun(this.threadId!, this.selectedAssistantId!)
             .pipe(
-              switchMap((runResponse) => {
+              switchMap(() => {
                 return interval(2000).pipe(
                   switchMap(() =>
-                    this.threadService
-                      .getRunStatus(this.threadId!)
-                      .pipe(
-                        takeWhile(
-                          (runStatus: any) => runStatus.status !== "completed",
-                          true
-                        )
-                      )
+                    this.threadService.getRunStatus(this.threadId!)
                   ),
-                  switchMap((runStatus: any) => {
-                    if (runStatus.status === "completed") {
-                      return this.threadService.getMessages(this.threadId!);
-                    }
-                    return of(null);
-                  })
+                  takeWhile(
+                    (runStatus: any) => runStatus.status === "in_progress",
+                    true
+                  ), // Continue while "in_progress"
+                  filter((runStatus: any) => runStatus.status === "completed"), // Process only when "completed"
+                  switchMap(() =>
+                    this.threadService.getMessages(this.threadId!)
+                  )
                 );
               })
             );

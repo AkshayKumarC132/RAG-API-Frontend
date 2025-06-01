@@ -169,4 +169,15 @@
       </form>
     </div>
   </footer>
+
+  <div *ngIf="messages.length > 0">
+    <ng-container *ngIf="messages[messages.length - 1]?.id && isString(messages[messages.length - 1].id)">
+      <!-- Your existing logic that uses startsWith -->
+      {{ messages[messages.length - 1].id.startsWith('someValue') }}
+    </ng-container>
+    <ng-container *ngIf="!messages[messages.length - 1]?.id || !isString(messages[messages.length - 1].id)">
+      <!-- Handle cases where id is missing or not a string -->
+      Invalid message ID
+    </ng-container>
+  </div>
 </div>
