@@ -30,13 +30,13 @@
         <dd class="col-sm-9">{{ document.title || 'N/A' }}</dd>
 
         <dt class="col-sm-3">Vector Store ID:</dt>
-        <dd class="col-sm-9">{{ document.vector_store_id || 'N/A' }}</dd>
+        <dd class="col-sm-9">{{ document.vector_store || 'N/A' }}</dd>
 
         <dt class="col-sm-3">Vector Store Name:</dt>
         <dd class="col-sm-9">{{ document.vector_store_name || 'N/A' }}</dd>
 
         <dt class="col-sm-3">Upload Date:</dt>
-        <dd class="col-sm-9">{{ document.upload_date | date:'longDate' }} at {{ document.upload_date | date:'shortTime' }}</dd>
+        <dd class="col-sm-9">{{ document.uploaded_at | date:'longDate' }} at {{ document.uploaded_at | date:'shortTime' }}</dd>
 
         <dt class="col-sm-3">Status:</dt>
         <dd class="col-sm-9">

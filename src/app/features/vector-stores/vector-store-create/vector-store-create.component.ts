@@ -17,7 +17,7 @@ export class VectorStoreCreateComponent implements OnInit {
   private router = inject(Router);
   private vectorStoreService = inject(VectorStoreService);
 
-  vectorStoreForm: FormGroup;
+  vectorStoreForm: FormGroup = new FormGroup({});
   submitting: boolean = false;
   error: any = null;
 

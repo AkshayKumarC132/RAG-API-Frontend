@@ -1,1 +1,39 @@
 /* Add component styles here */
+
+p {
+  color: orange;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.detail-container {
+  padding: 20px;
+  background-color: var(--light);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 26px;
+  color: var(--dark);
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  margin-bottom: 15px;
+  padding: 15px;
+  border: 1px solid var(--secondary);
+  border-radius: 4px;
+  background-color: var(--light);
+}
+
+.detail-item h3 {
+  font-size: 18px;
+  color: var(--dark);
+}
+
+.detail-item p {
+  font-size: 14px;
+  color: var(--secondary);
+}
