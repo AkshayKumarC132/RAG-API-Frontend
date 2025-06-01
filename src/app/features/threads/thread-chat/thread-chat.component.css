@@ -1,0 +1,80 @@
+.chat-container {
+  max-height: 100vh;
+  overflow: hidden; /* Prevent double scrollbars if header/footer are fixed height */
+}
+
+.chat-messages {
+  /* Styles for the message list area */
+  /* flex-grow: 1; is handled inline for now */
+  /* overflow-y: auto; is handled inline for now */
+}
+
+.message-wrapper {
+  display: flex;
+  margin-bottom: 0.75rem; /* Replaces mb-3 for consistency */
+}
+
+.user-message {
+  justify-content: flex-end; /* Align user messages to the right */
+}
+
+.assistant-message {
+  justify-content: flex-start; /* Align assistant messages to the left */
+}
+
+.message-bubble {
+  max-width: 70%;
+  border: 1px solid #eee;
+}
+
+.user-message .message-bubble {
+  background-color: #007bff; /* Bootstrap primary blue */
+  color: white;
+  border-radius: 15px 15px 0 15px; /* Rounded corners for user */
+}
+
+.assistant-message .message-bubble {
+  background-color: #f0f0f0; /* Light grey for assistant */
+  color: #333;
+  border-radius: 15px 15px 15px 0; /* Rounded corners for assistant */
+}
+
+.message-role {
+  /* font-weight: bold; is handled inline */
+  /* font-size: 0.8em; is handled inline */
+  margin-bottom: 0.25rem;
+}
+
+.user-message .message-role {
+  color: #e9ecef; /* Lighter color for role text on dark background */
+}
+
+.assistant-message .message-role {
+  color: #555;
+}
+
+.message-content {
+  /* For preserving whitespace and newlines */
+}
+.ws-pre-wrap {
+  white-space: pre-wrap;
+}
+
+
+.message-timestamp {
+  /* font-size: 0.75em; is handled inline */
+  /* color: #aaa; is handled inline */
+  text-align: right; /* Align timestamp to the right within the bubble */
+}
+
+.user-message .message-timestamp {
+  color: #ced4da;
+}
+
+.assistant-message .message-timestamp {
+   color: #777;
+}
+
+.chat-input-area {
+  /* Styles for the input area footer */
+}

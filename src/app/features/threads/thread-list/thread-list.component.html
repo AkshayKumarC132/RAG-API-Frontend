@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Threads</h2>
+    <button (click)="navigateToCreate()" class="btn btn-primary">Create New Thread</button>
+  </div>
+
+  <div *ngIf="isLoading && threads.length === 0" class="alert alert-info">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading threads...
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+    <button *ngIf="!isLoading" (click)="loadThreads()" class="btn btn-sm btn-outline-danger ms-2">Retry</button>
+  </div>
+
+  <div *ngIf="!isLoading && !error && threads.length === 0" class="alert alert-secondary">
+    No threads found. You can create one using the button above.
+  </div>
+
+  <div *ngIf="threads.length > 0" class="list-group">
+    <div *ngFor="let thread of threads" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+      <div (click)="navigateToChat(thread.id)" style="cursor: pointer; flex-grow: 1;">
+        <h5 class="mb-1">Thread ID: {{ thread.id }}</h5>
+        <p class="mb-1">
+          Vector Store: {{ thread.vector_store_name || thread.vector_store_id }}
+        </p>
+        <small class="text-muted">Last Updated: {{ thread.updated_at | date:'medium' }}</small>
+        <small class="text-muted ms-2">Created: {{ thread.created_at | date:'mediumDate' }}</small>
+      </div>
+      <div>
+        <button (click)="navigateToChat(thread.id)" class="btn btn-sm btn-success me-2" title="Open Chat">
+          <i class="fas fa-comments"></i> Chat
+        </button>
+        <button (click)="deleteThread(thread.id, $event)" class="btn btn-sm btn-danger" title="Delete Thread">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="container mt-4">
+  <div *ngIf="isLoading && !document" class="alert alert-info">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading document details...
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!isLoading && !document && !error" class="alert alert-warning">
+    Document not found or could not be loaded.
+    <button (click)="navigateBack()" class="btn btn-sm btn-secondary ms-2">Back to List</button>
+  </div>
+
+  <div *ngIf="document" class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Document: {{ document.title || document.id }}</h3>
+      <button (click)="navigateBack()" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i> Back to List
+      </button>
+    </div>
+
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">ID:</dt>
+        <dd class="col-sm-9">{{ document.id }}</dd>
+
+        <dt class="col-sm-3">Title:</dt>
+        <dd class="col-sm-9">{{ document.title || 'N/A' }}</dd>
+
+        <dt class="col-sm-3">Vector Store ID:</dt>
+        <dd class="col-sm-9">{{ document.vector_store_id || 'N/A' }}</dd>
+
+        <dt class="col-sm-3">Vector Store Name:</dt>
+        <dd class="col-sm-9">{{ document.vector_store_name || 'N/A' }}</dd>
+
+        <dt class="col-sm-3">Upload Date:</dt>
+        <dd class="col-sm-9">{{ document.upload_date | date:'longDate' }} at {{ document.upload_date | date:'shortTime' }}</dd>
+
+        <dt class="col-sm-3">Status:</dt>
+        <dd class="col-sm-9">
+          <span class="badge" [ngClass]="{
+            'bg-success': document.status === 'completed',
+            'bg-warning': document.status === 'processing' || document.status === 'pending',
+            'bg-danger': document.status === 'failed',
+            'bg-secondary': !document.status
+          }">
+            {{ document.status || 'Unknown' | titlecase }}
+          </span>
+          <button
+            (click)="checkDocumentStatus(true)"
+            class="btn btn-sm btn-outline-primary ms-2"
+            [disabled]="isCheckingStatus || isLoading || isTerminalStatus(document.status)"
+            title="Refresh Status">
+            <span *ngIf="isCheckingStatus" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <i *ngIf="!isCheckingStatus" class="fas fa-sync-alt"></i>
+            {{ isCheckingStatus ? 'Checking...' : 'Refresh' }}
+          </button>
+        </dd>
+        <dd class="col-sm-9 offset-sm-3" *ngIf="document.status === 'processing' && !isTerminalStatus(document.status) && !pollingSubscription">
+            <small class="text-muted">Status will be updated automatically. Click refresh for an immediate check.</small>
+        </dd>
+         <dd class="col-sm-9 offset-sm-3" *ngIf="pollingSubscription && (document.status === 'processing' || document.status === 'pending')">
+            <small class="text-muted">
+              <span class="spinner-grow spinner-grow-sm text-primary me-1" role="status" aria-hidden="true"></span>
+              Actively polling for status updates...
+            </small>
+        </dd>
+      </dl>
+    </div>
+
+    <div class="card-footer d-flex justify-content-end">
+      <button (click)="deleteDocument()" class="btn btn-danger" [disabled]="isDeleting">
+        <span *ngIf="isDeleting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <i *ngIf="!isDeleting" class="fas fa-trash-alt"></i>
+        {{ isDeleting ? 'Deleting...' : 'Delete Document' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container mt-4">
+  <div *ngIf="isLoading && !assistant" class="alert alert-info">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading assistant details...
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!isLoading && !assistant && !error" class="alert alert-warning">
+    Assistant not found or could not be loaded.
+    <button (click)="navigateBack()" class="btn btn-sm btn-secondary ms-2">Back to List</button>
+  </div>
+
+  <div *ngIf="assistant" class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Assistant: {{ assistant.name }}</h3>
+      <div>
+        <button (click)="navigateToEdit()" class="btn btn-warning me-2">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button (click)="navigateBack()" class="btn btn-outline-secondary">
+          <i class="fas fa-arrow-left"></i> Back to List
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">ID:</dt>
+        <dd class="col-sm-9">{{ assistant.id }}</dd>
+
+        <dt class="col-sm-3">Name:</dt>
+        <dd class="col-sm-9">{{ assistant.name }}</dd>
+
+        <dt class="col-sm-3">Vector Store ID:</dt>
+        <dd class="col-sm-9">{{ assistant.vector_store_id || 'N/A' }}</dd>
+
+        <dt class="col-sm-3">Vector Store Name:</dt>
+        <dd class="col-sm-9">{{ assistant.vector_store_name || 'N/A' }}</dd>
+
+        <dt class="col-sm-3">Created At:</dt>
+        <dd class="col-sm-9">{{ assistant.created_at | date:'longDate' }} at {{ assistant.created_at | date:'shortTime' }}</dd>
+
+        <dt class="col-sm-3">Instructions:</dt>
+        <dd class="col-sm-9">
+          <pre class="bg-light p-2 rounded" style="white-space: pre-wrap; word-break: break-word;">{{ assistant.instructions || 'N/A' }}</pre>
+        </dd>
+      </dl>
+    </div>
+
+    <div class="card-footer d-flex justify-content-end">
+      <button (click)="deleteAssistant()" class="btn btn-danger" [disabled]="isDeleting">
+        <span *ngIf="isDeleting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <i *ngIf="!isDeleting" class="fas fa-trash-alt"></i>
+        {{ isDeleting ? 'Deleting...' : 'Delete Assistant' }}
+      </button>
+    </div>
+  </div>
+</div>

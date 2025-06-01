@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Create New Thread</h2>
+    <button (click)="navigateBack()" class="btn btn-outline-secondary">
+      <i class="fas fa-arrow-left"></i> Back to Thread List
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="alert alert-info">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Creating thread...
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    <strong>Error:</strong> {{ error }}
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #createThreadForm="ngForm" *ngIf="!isLoading && !successMessage">
+    <!-- Vector Store ID Input -->
+    <div class="form-group mb-3">
+      <label for="vectorStoreId" class="form-label">Vector Store ID:</label>
+      <input
+        type="text"
+        id="vectorStoreId"
+        name="vectorStoreId"
+        class="form-control"
+        [(ngModel)]="vectorStoreId"
+        required
+        minlength="3"
+        #vsIdInput="ngModel"
+        [class.is-invalid]="vsIdInput.invalid && (vsIdInput.dirty || vsIdInput.touched)"
+        placeholder="Enter the ID of the Vector Store for this thread"
+      />
+      <!-- TODO: Replace with a dropdown fetched from VectorStoreService in the future -->
+      <!-- <select id="vectorStoreId" name="vectorStoreId" class="form-control" [(ngModel)]="vectorStoreId" required #vsIdInput="ngModel">
+             <option value="" disabled>Select a Vector Store</option>
+             <option *ngFor="let vs of vectorStores$ | async" [value]="vs.id">{{ vs.name }} ({{ vs.id }})</option>
+           </select> -->
+      <div *ngIf="vsIdInput.invalid && (vsIdInput.dirty || vsIdInput.touched)" class="invalid-feedback">
+        <div *ngIf="vsIdInput.errors?.['required']">Vector Store ID is required.</div>
+        <div *ngIf="vsIdInput.errors?.['minlength']">Vector Store ID must be at least 3 characters long.</div>
+      </div>
+      <small class="form-text text-muted">A thread must be associated with a Vector Store.</small>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary" [disabled]="createThreadForm.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        {{ isLoading ? 'Creating...' : 'Create Thread' }}
+      </button>
+    </div>
+  </form>
+</div>

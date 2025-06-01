@@ -1,0 +1,109 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Ingest New Document</h2>
+    <button (click)="navigateBack()" class="btn btn-outline-secondary">
+      <i class="fas fa-arrow-left"></i> Back to Document List
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="alert alert-info">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Ingesting document... Please wait.
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    <strong>Error:</strong> {{ error }}
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #ingestForm="ngForm" *ngIf="!isLoading && !successMessage">
+    <!-- Vector Store ID Input -->
+    <div class="form-group mb-3">
+      <label for="vectorStoreId" class="form-label">Vector Store ID:</label>
+      <input
+        type="text"
+        id="vectorStoreId"
+        name="vectorStoreId"
+        class="form-control"
+        [(ngModel)]="vectorStoreId"
+        required
+        #vsIdInput="ngModel"
+        [class.is-invalid]="vsIdInput.invalid && (vsIdInput.dirty || vsIdInput.touched)"
+      />
+      <!-- TODO: Replace with a dropdown fetched from VectorStoreService -->
+      <!-- <select id="vectorStoreId" name="vectorStoreId" class="form-control" [(ngModel)]="vectorStoreId" required>
+        <option *ngFor="let vs of vectorStores$ | async" [value]="vs.id">{{ vs.name }} ({{ vs.id }})</option>
+      </select> -->
+      <div *ngIf="vsIdInput.invalid && (vsIdInput.dirty || vsIdInput.touched)" class="invalid-feedback">
+        Vector Store ID is required.
+      </div>
+      <small class="form-text text-muted">The ID of the Vector Store this document will belong to.</small>
+    </div>
+
+    <!-- Ingestion Mode Selection -->
+    <div class="form-group mb-3">
+      <label class="form-label">Ingestion Mode:</label>
+      <div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="ingestMode" id="ingestModeFile" value="file" [(ngModel)]="ingestMode">
+          <label class="form-check-label" for="ingestModeFile">Upload File</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="ingestMode" id="ingestModeS3" value="s3" [(ngModel)]="ingestMode">
+          <label class="form-check-label" for="ingestModeS3">From S3 URL</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Upload Input -->
+    <div *ngIf="ingestMode === 'file'" class="form-group mb-3">
+      <label for="fileUpload" class="form-label">Select File:</label>
+      <input
+        type="file"
+        id="fileUpload"
+        name="fileUpload"
+        class="form-control"
+        (change)="onFileSelected($event)"
+        [required]="ingestMode === 'file'"
+        [class.is-invalid]="fileInput.invalid && (fileInput.dirty || fileInput.touched) && ingestMode === 'file'"
+      />
+      <div *ngIf="fileInput.invalid && (fileInput.dirty || fileInput.touched) && ingestMode === 'file'" class="invalid-feedback">
+        Please select a file.
+      </div>
+      <small *ngIf="selectedFile" class="form-text text-muted">Selected file: {{ selectedFile.name }} ({{ selectedFile.size | number }} bytes)</small>
+    </div>
+
+    <!-- S3 URL Input -->
+    <div *ngIf="ingestMode === 's3'" class="form-group mb-3">
+      <label for="s3Url" class="form-label">S3 URL:</label>
+      <input
+        type="url"
+        id="s3Url"
+        name="s3Url"
+        class="form-control"
+        placeholder="s3://your-bucket-name/path/to/your/file.pdf"
+        [(ngModel)]="s3Url"
+        (input)="onS3UrlChange()"
+        [required]="ingestMode === 's3'"
+        #s3Input="ngModel"
+        pattern="^s3:\/\/[a-zA-Z0-9.\-_]{3,}[a-zA-Z0-9\/.\-_%&?#]*$"
+        [class.is-invalid]="s3Input.invalid && (s3Input.dirty || s3Input.touched) && ingestMode === 's3'"
+      />
+       <div *ngIf="s3Input.invalid && (s3Input.dirty || s3Input.touched) && ingestMode === 's3'" class="invalid-feedback">
+        <span *ngIf="s3Input.errors?.['required']">S3 URL is required.</span>
+        <span *ngIf="s3Input.errors?.['pattern']">Invalid S3 URL format. Must start with s3:// followed by bucket/key.</span>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary" [disabled]="ingestForm.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        {{ isLoading ? 'Ingesting...' : 'Start Ingestion' }}
+      </button>
+    </div>
+  </form>
+</div>

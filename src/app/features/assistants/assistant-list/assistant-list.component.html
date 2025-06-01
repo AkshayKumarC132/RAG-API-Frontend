@@ -1,0 +1,64 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Assistants</h2>
+    <button (click)="navigateToCreate()" class="btn btn-primary">Create New Assistant</button>
+  </div>
+
+  <div *ngIf="isLoading && assistants.length === 0" class="alert alert-info">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading assistants...
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+    <button *ngIf="!isLoading" (click)="loadAssistants()" class="btn btn-sm btn-outline-danger ms-2">Retry</button>
+  </div>
+
+  <div *ngIf="!isLoading && !error && assistants.length === 0" class="alert alert-secondary">
+    No assistants found. You can create one using the button above.
+  </div>
+
+  <div *ngIf="assistants.length > 0" class="table-responsive">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>Name</th>
+          <th>Vector Store</th>
+          <th>Instructions (Excerpt)</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let assistant of assistants" (click)="navigateToDetail(assistant.id)" style="cursor: pointer;">
+          <td>{{ assistant.name }}</td>
+          <td>{{ assistant.vector_store_name || assistant.vector_store_id || 'N/A' }}</td>
+          <td class="instructions-excerpt" title="{{ assistant.instructions }}">
+            {{ (assistant.instructions && assistant.instructions.length > 50) ? (assistant.instructions | slice:0:50) + '...' : (assistant.instructions || 'N/A') }}
+          </td>
+          <td>{{ assistant.created_at | date:'medium' }}</td>
+          <td>
+            <button (click)="navigateToDetail(assistant.id)" class="btn btn-sm btn-info me-1" title="View Details">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button (click)="navigateToEdit(assistant.id, $event)" class="btn btn-sm btn-warning me-1" title="Edit Assistant">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button (click)="deleteAssistant(assistant.id, $event)" class="btn btn-sm btn-danger" title="Delete Assistant">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .instructions-excerpt {
+    max-width: 200px; /* Adjust as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>
