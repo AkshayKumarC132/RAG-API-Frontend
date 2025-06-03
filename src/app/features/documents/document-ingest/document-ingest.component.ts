@@ -14,7 +14,7 @@ import { catchError, finalize } from "rxjs/operators";
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: "./document-ingest.component.html",
-  styleUrls: ['./document-ingest.component.scss']
+  styleUrls: ["./document-ingest.component.scss"],
 })
 export class DocumentIngestComponent implements OnInit {
   vectorStoreId = "";
@@ -33,9 +33,8 @@ export class DocumentIngestComponent implements OnInit {
   constructor(
     private documentService: DocumentService,
     private router: Router,
-    private route: ActivatedRoute
-  ) // TODO: private vectorStoreService: VectorStoreService
-  {}
+    private route: ActivatedRoute // TODO: private vectorStoreService: VectorStoreService
+  ) {}
 
   ngOnInit(): void {
     // TODO: Load vector stores if implementing dropdown
@@ -123,7 +122,7 @@ export class DocumentIngestComponent implements OnInit {
         catchError((err) => {
           console.error("Error ingesting document:", err);
           this.error = `Failed to ingest document. ${
-            err.error?.detail || err.message || "Please try again."
+            err.error?.error || err.message || "Please try again."
           }`;
           return of(null); // Continue to finalize
         }),

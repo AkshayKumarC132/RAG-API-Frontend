@@ -21,6 +21,7 @@
     <thead class="thead-light">
       <tr>
         <th>Name</th>
+        <th>Provider</th>
         <th>Masked Key</th>
         <th>Created At</th>
         <th>Status</th>
@@ -30,14 +31,18 @@
     <tbody>
       <tr *ngFor="let apiKey of apiKeys">
         <td>{{ apiKey.name || 'N/A' }}</td>
-        <td>
-          {{ apiKey.api_key.slice(0, 15) + ('*'.repeat(Math.min(apiKey.api_key.length - 15, 27))) }}
+        <td>{{ apiKey.provider }}</td>
+        <td >
+          <ng-container *ngIf="apiKey.api_key.length>0">
+            {{ apiKey.api_key ? (apiKey.api_key.slice(0, 15) + ('*'.repeat(Math.min(apiKey.api_key.length - 15, 27)))) : 'N/A' }}
+          </ng-container>
+          <ng-container *ngIf="apiKey.api_key.length === 0">
+            N/A
+          </ng-container>
         </td>
         <td>{{ apiKey.created_at | date:'medium' }}</td>
         <td>
-          <span [class.text-success]="apiKey.is_valid" [class.text-danger]="!apiKey.is_valid">
-            {{ apiKey.is_valid ? 'Valid' : 'Invalid' }}
-          </span>
+          {{ apiKey.is_valid ? 'Valid' : 'Invalid' }}
         </td>
         <td>
           <button (click)="deleteApiKey(apiKey.id)" class="btn btn-danger btn-sm" [disabled]="isLoading">

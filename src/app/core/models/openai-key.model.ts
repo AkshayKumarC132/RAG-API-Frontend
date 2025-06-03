@@ -5,9 +5,11 @@ export interface OpenAIKey {
   name?: string;
   is_valid: boolean;
   created_at: string;
+  provider: string;
 }
 
 export interface CreateOpenAIKeyRequest {
-  api_key: string;
+  api_key?: string;
   name?: string;
+  provider: string;
 }
