@@ -1,6 +1,7 @@
 export interface Document {
   id: string;
   title: string;
+  vector_store_id?: string;
   vector_store?: string;
   vector_store_name?: string;
   uploaded_at: string;

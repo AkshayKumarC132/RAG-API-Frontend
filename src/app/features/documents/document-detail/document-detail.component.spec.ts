@@ -22,7 +22,7 @@ describe('DocumentDetailComponent', () => {
     id: documentId,
     title: 'Test Document',
     vector_store_id: 'vs1',
-    upload_date: new Date().toISOString(),
+    uploaded_at: new Date().toISOString(),
     status: 'processing'
   };
 

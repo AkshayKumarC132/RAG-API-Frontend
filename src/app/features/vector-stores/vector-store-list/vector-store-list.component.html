@@ -34,6 +34,9 @@
                 <a [routerLink]="['/vector-stores', vs.id, 'edit']" class="btn btn-sm btn-warning" title="Edit Vector Store">
                   <i class="fas fa-edit"></i> Edit
                 </a>
+                <button style="margin-left: 5px;" (click)="deleteVectorStore(vs.id)" class="btn btn-sm btn-danger" title="Delete Vector Store">
+                  Delete
+                </button>
               </td>
             </tr>
           </tbody>
