@@ -4,7 +4,7 @@ export interface OpenAIKey {
   masked_key: string;
   name?: string;
   is_valid: boolean;
-  created_at: string;
+  is_active: boolean;
   provider: string;
 }
 
@@ -12,4 +12,5 @@ export interface CreateOpenAIKeyRequest {
   api_key?: string;
   name?: string;
   provider: string;
+  is_active?: boolean;
 }

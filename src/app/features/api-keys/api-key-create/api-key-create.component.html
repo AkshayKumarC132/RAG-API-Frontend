@@ -37,6 +37,12 @@
         [required]="isApiKeyRequired()"
       />
     </div>
+    <div class="mb-3">
+      <label class="form-label">
+        <input type="checkbox" [(ngModel)]="is_active" name="is_active" />
+        Make Active
+      </label>
+    </div>
     
     <div *ngIf="error" class="alert alert-danger">
       {{ error }}

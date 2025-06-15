@@ -18,6 +18,7 @@ export class ApiKeyCreateComponent {
   selectedProvider = "OpenAI"; // Default provider
   isLoading = false;
   error: string | null = null;
+  is_active = false; // New property for active status
 
   providers = ["OpenAI", "Ollama"]; // List of providers
 
@@ -39,6 +40,7 @@ export class ApiKeyCreateComponent {
       api_key: this.apiKeyString.trim() || "", // Send empty string if not required
       name: this.apiKeyName.trim() || undefined, // Send undefined if name is empty
       provider: this.selectedProvider, // Include the selected provider
+      is_active: this.is_active, // Include the active status
     };
 
     this.openAIKeyService.createAPIKey(request).subscribe(

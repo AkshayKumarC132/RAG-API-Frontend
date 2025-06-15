@@ -23,7 +23,7 @@
         <th>Name</th>
         <th>Provider</th>
         <th>Masked Key</th>
-        <th>Created At</th>
+        <th>Is Active</th>
         <th>Status</th>
         <th>Actions</th>
       </tr>
@@ -34,19 +34,36 @@
         <td>{{ apiKey.provider }}</td>
         <td >
           <ng-container *ngIf="apiKey.api_key.length>0">
-            {{ apiKey.api_key ? (apiKey.api_key.slice(0, 15) + ('*'.repeat(Math.min(apiKey.api_key.length - 15, 27)))) : 'N/A' }}
+            <span *ngIf="!apiKey.showKey">**************
+              <button type="button" class="btn btn-link btn-sm p-0 ms-1" (click)="toggleApiKeyVisibility(apiKey)">
+                <i class="bi bi-eye"></i>
+              </button>
+            </span>
+            <span *ngIf="apiKey.showKey">
+              {{ apiKey.api_key }}
+              <button type="button" class="btn btn-link btn-sm p-0 ms-1" (click)="toggleApiKeyVisibility(apiKey)">
+                <i class="bi bi-eye-slash"></i>
+              </button>
+            </span>
           </ng-container>
           <ng-container *ngIf="apiKey.api_key.length === 0">
             N/A
           </ng-container>
         </td>
-        <td>{{ apiKey.created_at | date:'medium' }}</td>
+        <td>
+          <span [ngStyle]="{ color: apiKey.is_active ? 'green' : 'inherit', fontWeight: apiKey.is_active ? 'bold' : 'normal' }">
+            {{ apiKey.is_active ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
         <td>
           {{ apiKey.is_valid ? 'Valid' : 'Invalid' }}
         </td>
         <td>
           <button (click)="deleteApiKey(apiKey.id)" class="btn btn-danger btn-sm" [disabled]="isLoading">
-            <i class="fas fa-trash-alt"></i> Delete
+            <i class="bi bi-trash"></i> Delete
+          </button>
+          <button (click)="editApiKey(apiKey.id)" class="btn btn-secondary btn-sm ms-2">
+            <i class="bi bi-pencil-square"></i> Edit
           </button>
         </td>
       </tr>

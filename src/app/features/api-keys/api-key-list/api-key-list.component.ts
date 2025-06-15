@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { RouterModule } from "@angular/router";
+import { RouterModule, Router } from "@angular/router";
 import { OpenAIKeyService } from "../../../services/openai-key.service"; // Corrected path
 import { OpenAIKey } from "../../../core/models/openai-key.model";
 
@@ -9,15 +9,18 @@ import { OpenAIKey } from "../../../core/models/openai-key.model";
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: "./api-key-list.component.html",
-  styleUrls: ['./api-key-list.component.scss']
+  styleUrls: ["./api-key-list.component.scss"],
 })
 export class ApiKeyListComponent implements OnInit {
-  apiKeys: OpenAIKey[] = [];
+  apiKeys: (OpenAIKey & { showKey?: boolean })[] = [];
   isLoading = false;
   error: string | null = null;
   Math = Math; // Make Math available in template
 
-  constructor(private openAIKeyService: OpenAIKeyService) {}
+  constructor(
+    private openAIKeyService: OpenAIKeyService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadApiKeys();
@@ -28,7 +31,7 @@ export class ApiKeyListComponent implements OnInit {
     this.error = null;
     this.openAIKeyService.getAPIKeys().subscribe(
       (keys) => {
-        this.apiKeys = keys;
+        this.apiKeys = keys.map((key) => ({ ...key, showKey: false }));
         this.isLoading = false;
       },
       (error) => {
@@ -37,6 +40,10 @@ export class ApiKeyListComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  toggleApiKeyVisibility(apiKey: OpenAIKey & { showKey?: boolean }): void {
+    apiKey.showKey = !apiKey.showKey;
   }
 
   deleteApiKey(id: string): void {
@@ -58,5 +65,9 @@ export class ApiKeyListComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  editApiKey(id: string): void {
+    this.router.navigate(["/api-keys/edit", id]);
   }
 }
