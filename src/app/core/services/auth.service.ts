@@ -32,6 +32,22 @@ export class AuthService {
     this._isAuthenticated.set(this.hasToken());
   }
 
+  getUserDetails(): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError(() => new Error("No token found"));
+    }
+    return this.http.get<any>(`${this.apiUrl}/protected/${token}/`).pipe(
+      tap((response) => {
+        // Update the current user with the fetched details
+        this.currentUser.set(response.user as User);
+      }),
+      catchError((error) =>
+        throwError(() => new Error(error.error?.message || "Failed to load user details"))
+      )
+    );
+  }
+
   register(
     username: string,
     email: string,
@@ -104,16 +120,16 @@ export class AuthService {
       tap((user) => {
         this.currentUser.set(user);
       }),
-      catchError((error) => {
-        if (error.status === 401) {
-          this.clearSession();
-          this.router.navigate(["/auth/login"]);
-        }
-        return throwError(
-          () => new Error(error.error?.message || "Failed to load user profile")
-        );
-      })
+      catchError((error) =>
+        throwError(
+          () => new Error(error.error?.message || "Failed to load profile")
+        )
+      )
     );
+  }
+
+  updateCurrentUser(user: User): void {
+    this.currentUser.set(user);
   }
 
   getToken(): string | null {
