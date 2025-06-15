@@ -39,13 +39,13 @@
           <td>{{ assistant.created_at | date:'medium' }}</td>
           <td>
             <button (click)="navigateToDetail(assistant.id)" class="btn btn-sm btn-info me-1" title="View Details">
-              <i class="fas fa-eye"></i>
+              <i class="bi bi-eye"></i> Details
             </button>
             <button (click)="navigateToEdit(assistant.id, $event)" class="btn btn-sm btn-warning me-1" title="Edit Assistant">
-              <i class="fas fa-edit"></i>
+              <i class="bi bi-pencil"></i> Edit
             </button>
             <button (click)="deleteAssistant(assistant.id, $event)" class="btn btn-sm btn-danger" title="Delete Assistant">
-              <i class="fas fa-trash-alt"></i>
+              <i class="bi bi-trash"></i> Delete
             </button>
           </td>
         </tr>

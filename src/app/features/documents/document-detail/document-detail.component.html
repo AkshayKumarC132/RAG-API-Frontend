@@ -17,7 +17,7 @@
     <div class="card-header d-flex justify-content-between align-items-center">
       <h3 class="mb-0">Document: {{ document.title || document.id }}</h3>
       <button (click)="navigateBack()" class="btn btn-outline-secondary">
-        <i class="fas fa-arrow-left"></i> Back to List
+        <i class="bi bi-arrow-left"></i> Back to List
       </button>
     </div>
 
@@ -54,7 +54,7 @@
             [disabled]="isCheckingStatus || isLoading || isTerminalStatus(document.status)"
             title="Refresh Status">
             <span *ngIf="isCheckingStatus" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <i *ngIf="!isCheckingStatus" class="fas fa-sync-alt"></i>
+            <i *ngIf="!isCheckingStatus" class="bi bi-arrow-repeat"></i>
             {{ isCheckingStatus ? 'Checking...' : 'Refresh' }}
           </button>
         </dd>
@@ -73,7 +73,7 @@
     <div class="card-footer d-flex justify-content-end">
       <button (click)="deleteDocument()" class="btn btn-danger" [disabled]="isDeleting">
         <span *ngIf="isDeleting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <i *ngIf="!isDeleting" class="fas fa-trash-alt"></i>
+        <i *ngIf="!isDeleting" class="bi bi-trash"></i>
         {{ isDeleting ? 'Deleting...' : 'Delete Document' }}
       </button>
     </div>

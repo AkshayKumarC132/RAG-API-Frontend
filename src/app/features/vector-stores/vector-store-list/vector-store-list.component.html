@@ -29,10 +29,10 @@
               <td>{{ vs.created_at | date:'short' }}</td>
               <td class="text-end">
                 <a [routerLink]="['/vector-stores', vs.id]" class="btn btn-sm btn-info me-1" title="View Details">
-                  <i class="fas fa-eye"></i> Details
+                  <i class="bi bi-eye"></i> Details
                 </a>
                 <a [routerLink]="['/vector-stores', vs.id, 'edit']" class="btn btn-sm btn-warning" title="Edit Vector Store">
-                  <i class="fas fa-edit"></i> Edit
+                  <i class="bi bi-pencil"></i> Edit
                 </a>
                 <button style="margin-left: 5px;" (click)="deleteVectorStore(vs.id)" class="btn btn-sm btn-danger" title="Delete Vector Store">
                   Delete

@@ -29,14 +29,14 @@
               <td>{{ user.created_at | date:'short' }}</td>
               <td class="text-end">
                 <a [routerLink]="['/users', user.id]" class="btn btn-sm btn-info me-1" title="View Details">
-                  <i class="fas fa-eye"></i> Details
+                  <i class="bi bi-eye"></i> Details
                 </a>
                 <a [routerLink]="['/users', user.id, 'edit']" class="btn btn-sm btn-warning" title="Edit User">
-                  <i class="fas fa-edit"></i> Edit
+                  <i class="bi bi-pencil"></i> Edit
                 </a>
                 <!-- Add delete button if applicable, following assistant pattern
                 <button (click)="deleteUser(user.id, $event)" class="btn btn-sm btn-danger ms-1" title="Delete User">
-                  <i class="fas fa-trash-alt"></i>
+                  <i class="bi bi-trash"></i>
                 </button>
                 -->
               </td>

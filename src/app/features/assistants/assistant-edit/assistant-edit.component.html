@@ -34,6 +34,12 @@
       {{ successMessage }}
     </div>
 
+    <!-- <div class="mb-3">
+      <strong>Debug:</strong>
+      <div>isLoading: {{ isLoading }}</div>
+      <div>originalAssistant: {{ originalAssistant | json }}</div>
+    </div> -->
+
     <form (ngSubmit)="onSubmit()" #editForm="ngForm" *ngIf="!isLoading">
       <!-- Name -->
       <div class="form-group mb-3">
