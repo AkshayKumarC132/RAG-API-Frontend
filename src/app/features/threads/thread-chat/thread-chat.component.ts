@@ -47,12 +47,14 @@ export class ThreadChatComponent
   isLoadingThread = false;
   isLoadingMessages = false;
   isSendingMessage = false;
+  isPollingForAssistant = false;
 
   error: string | null = null;
   sendError: string | null = null;
 
   private routeSub: Subscription | undefined;
   private autoRefreshSub: Subscription | undefined;
+  private assistantPollingSub: Subscription | undefined;
 
   isString(value: any): boolean {
     return typeof value === "string";
@@ -203,6 +205,14 @@ export class ThreadChatComponent
           (a, b) =>
             new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
         );
+        // Stop polling immediately if assistant message is present
+        if (
+          this.isPollingForAssistant &&
+          this.messages.length > 0 &&
+          this.messages[this.messages.length - 1].role === "assistant"
+        ) {
+          this.stopAssistantPolling();
+        }
       });
   }
 
@@ -250,6 +260,9 @@ export class ThreadChatComponent
               new Date(b.created_at).getTime()
           );
 
+          // Start polling for assistant's response every 10 seconds
+          this.startAssistantPolling();
+
           return this.threadService
             .createRun(this.threadId!, this.selectedAssistantId!)
             .pipe(
@@ -296,6 +309,38 @@ export class ThreadChatComponent
       });
   }
 
+  private startAssistantPolling(): void {
+    // Stop any existing polling
+    this.stopAssistantPolling();
+    // If the latest message is already from assistant, do not start polling
+    if (
+      this.messages.length > 0 &&
+      this.messages[this.messages.length - 1].role === "assistant"
+    ) {
+      this.isPollingForAssistant = false;
+      return;
+    }
+    this.isPollingForAssistant = true;
+    this.assistantPollingSub = interval(10000).subscribe(() => {
+      this.refreshMessages();
+      // Check if the latest message is from assistant
+      if (
+        this.messages.length > 0 &&
+        this.messages[this.messages.length - 1].role === "assistant"
+      ) {
+        this.stopAssistantPolling();
+      }
+    });
+  }
+
+  private stopAssistantPolling(): void {
+    if (this.assistantPollingSub) {
+      this.assistantPollingSub.unsubscribe();
+      this.assistantPollingSub = undefined;
+    }
+    this.isPollingForAssistant = false;
+  }
+
   scrollToBottom(): void {
     try {
       if (this.messageContainer?.nativeElement) {
@@ -315,6 +360,9 @@ export class ThreadChatComponent
     }
     if (this.autoRefreshSub) {
       this.autoRefreshSub.unsubscribe();
+    }
+    if (this.assistantPollingSub) {
+      this.assistantPollingSub.unsubscribe();
     }
     // Dispose of all tooltips on destroy
     const inputElement = document.querySelector(

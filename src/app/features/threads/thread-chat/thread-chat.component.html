@@ -109,6 +109,12 @@
         </div>
       </div>
     </div>
+
+    <!-- Thinking indicator while polling for assistant response -->
+    <div *ngIf="isPollingForAssistant" class="text-center mt-3">
+      <span class="spinner-border spinner-border-sm text-primary me-2" role="status" aria-hidden="true"></span>
+      <span class="text-muted">Assistant is thinking...</span>
+    </div>
   </main>
 
   <footer class="chat-input-area p-3 bg-light border-top">
