@@ -89,7 +89,7 @@
         (input)="onS3UrlChange()"
         [required]="ingestMode === 's3'"
         #s3Input="ngModel"
-        pattern="^s3:\/\/[a-zA-Z0-9.\-_]{3,}[a-zA-Z0-9\/.\-_%&?#]*$"
+        pattern="^(s3:\/\/[a-zA-Z0-9.\-_]{3,}\/[a-zA-Z0-9\/.\-_%&?#]*)|(https:\/\/[a-zA-Z0-9.-]+\/[a-zA-Z0-9\/.\-_%&?#]*)$"
         [class.is-invalid]="s3Input.invalid && (s3Input.dirty || s3Input.touched) && ingestMode === 's3'"
       />
        <div *ngIf="s3Input.invalid && (s3Input.dirty || s3Input.touched) && ingestMode === 's3'" class="invalid-feedback">

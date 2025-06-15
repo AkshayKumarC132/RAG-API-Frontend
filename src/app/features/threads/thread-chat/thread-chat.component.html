@@ -62,23 +62,17 @@
     </button>
   </div>
 
-  <main
-    #messageContainer
-    class="chat-messages flex-grow-1 p-3 container-fluid"
-    style="overflow-y: auto;"
-  >
+  <main #messageContainer class="chat-messages flex-grow-1 p-3 container-fluid" style="overflow-y: auto;">
     <div *ngIf="isLoadingMessages && messages.length === 0" class="text-center">
       <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading messages...</span>
       </div>
     </div>
-    <div
-      *ngIf="!isLoadingMessages && messages.length === 0 && !error"
-      class="text-center text-muted mt-5"
-    >
-      No messages in this thread yet. Start the conversation!
+    <div *ngIf="!isLoadingMessages && messages.length === 0 && !error" class="text-center text-muted mt-5">
+      <p>No messages in this thread yet.</p>
+      <p>Start the conversation!</p>
     </div>
-
+  
     <div
       *ngFor="let msg of messages"
       class="message-wrapper mb-3"
@@ -91,26 +85,27 @@
         <div class="message-role fw-bold small">{{ msg.role | titlecase }}</div>
         <div class="message-content ws-pre-wrap">{{ msg.content }}</div>
         <div class="message-timestamp text-muted small mt-1">
-          {{ msg.created_at | date: 'shortTime' }}
+            {{ msg.created_at | date: 'shortTime' }}
         </div>
       </div>
     </div>
-    <div
-      *ngIf="
-        isSendingMessage &&
-        messages.length > 0 &&
-        messages[messages.length - 1].role === 'user' &&
-        messages[messages.length - 1].id?.startsWith('temp-')
-      "
-      class="message-wrapper user-message mb-3 opacity-50"
-    >
-      <div class="message-bubble p-2 rounded shadow-sm">
-        <div class="message-role fw-bold small">User (Sending...)</div>
-        <div class="message-content ws-pre-wrap">
-          {{ messages[messages.length - 1].content }}
+  
+    <!-- Placeholder for message being sent -->
+    <div *ngIf="
+      isSendingMessage &&
+      messages.length > 0 &&
+      messages[messages.length - 1].role === 'user' &&
+      messages[messages.length - 1].id?.startsWith('temp-')
+    " class="message-wrapper user-message mb-3 opacity-75">
+      <div class="message-bubble p-3 rounded shadow-sm bg-secondary text-white">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="message-role fw-bold small">User (Sending...)</div>
+          <div class="text-muted small">
+            {{ messages[messages.length - 1].created_at | date: 'shortTime' }}
+          </div>
         </div>
-        <div class="message-timestamp text-muted small mt-1">
-          {{ messages[messages.length - 1].created_at | date: 'shortTime' }}
+        <div class="message-content ws-pre-wrap" style="white-space: pre-wrap;">
+          {{ messages[messages.length - 1].content }}
         </div>
       </div>
     </div>

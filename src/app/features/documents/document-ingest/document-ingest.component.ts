@@ -80,21 +80,22 @@ export class DocumentIngestComponent implements OnInit {
     if (this.ingestMode === "file" && !this.selectedFile) {
       this.error = "Please select a file to upload.";
       return;
-    } else if (this.ingestMode === "s3" && !this.s3Url.trim()) {
-      this.error = "Please provide an S3 URL.";
-      return;
-    } else if (this.ingestMode === "s3") {
-      try {
-        const url = new URL(this.s3Url.trim());
-        if (url.protocol !== "s3:") {
-          this.error = "Invalid S3 URL. It must start with s3://";
-          return;
-        }
-      } catch (_) {
-        this.error = "Invalid S3 URL format.";
-        return;
-      }
     }
+    // else if (this.ingestMode === "s3" && !this.s3Url.trim()) {
+    //   this.error = "Please provide an S3 URL.";
+    //   return;
+    // } else if (this.ingestMode === "s3") {
+    //   try {
+    //     const url = new URL(this.s3Url.trim());
+    //     if (url.protocol !== "s3:") {
+    //       this.error = "Invalid S3 URL. It must start with s3://";
+    //       return;
+    //     }
+    //   } catch (_) {
+    //     this.error = "Invalid S3 URL format.";
+    //     return;
+    //   }
+    // }
 
     this.isLoading = true;
     let ingestObs: Observable<any>;

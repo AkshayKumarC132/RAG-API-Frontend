@@ -54,7 +54,7 @@ export class DocumentService {
       // Handle S3 URL
       return this.http.post(url, {
         vector_store_id: vectorStoreId,
-        s3_url: s3Url
+        s3_file_url: s3Url
       });
     }
     
