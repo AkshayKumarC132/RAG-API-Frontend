@@ -26,9 +26,9 @@
             </td>
           </tr>
           <tr *ngFor="let alert of alerts">
-            <td>{{ alert.document_title || alert.document_id }}</td>
+            <td>{{ alert.document_title || alert.document }}</td>
             <td>{{ alert.keyword }}</td>
-            <td>{{ alert.text_snippet }}</td>
+            <td>{{ alert.snippet }}</td>
             <td>{{ alert.created_at | date:'medium' }}</td>
             <td>
               <button class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/alerts', alert.id]">

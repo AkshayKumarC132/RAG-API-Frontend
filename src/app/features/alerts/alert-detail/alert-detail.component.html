@@ -20,7 +20,7 @@
     <div class="card-body">
       <dl class="row">
         <dt class="col-sm-3">Document</dt>
-        <dd class="col-sm-9">{{ alert.document_title || alert.document_id }}</dd>
+        <dd class="col-sm-9">{{ alert.document_title || alert.document }}</dd>
 
         <dt class="col-sm-3">Keyword</dt>
         <dd class="col-sm-9">{{ alert.keyword }}</dd>
@@ -28,7 +28,7 @@
         <dt class="col-sm-3">Text Snippet</dt>
         <dd class="col-sm-9">
           <div class="alert alert-light">
-            {{ alert.text_snippet }}
+            {{ alert.snippet }}
           </div>
         </dd>
 

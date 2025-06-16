@@ -1,8 +1,8 @@
 export interface DocumentAlert {
   id: string;
-  document_id: string;
+  document: string;
   document_title?: string;
   keyword: string;
-  text_snippet: string;
+  snippet: string;
   created_at: string;
 }

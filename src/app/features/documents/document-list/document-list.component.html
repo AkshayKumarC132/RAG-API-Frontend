@@ -38,6 +38,7 @@
               'bg-success': doc.status === 'completed',
               'bg-warning': doc.status === 'processing' || doc.status === 'pending',
               'bg-danger': doc.status === 'failed',
+              'bg-info': doc.status === 'queued',
               'bg-secondary': !doc.status
             }">
               {{ doc.status || 'Unknown' | titlecase }}
